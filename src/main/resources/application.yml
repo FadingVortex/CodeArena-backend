@@ -1,0 +1,11 @@
+#spring.application.name=demo
+spring:
+    application:
+        name: CodeArena
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/platform?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+        username: root
+        password: lueluelue
+server:
+    port: 8081
