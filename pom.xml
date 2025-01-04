@@ -78,6 +78,17 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <!-- ** 代表所有子文件夹-->
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource><directory>src/main/resources</directory></resource>
+        </resources>
+
     </build>
 
 </project>

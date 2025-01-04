@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xyz.codearena.mapper.TestMapper"> <!-- 修改为对应的 Mapper 类路径 -->
+
+    <select id="selectUsernamePassword" parameterType="java.lang.String" resultType="com.xyz.codearena.dao.User">
+       select * from users where `username` = #{username}
+
+    </select>
+
+
+    <!-- 示例: 定义返回结果集的映射 -->
+<!--    <resultMap id="BaseResultMap" type="com.example.domain.YourEntity"> &lt;!&ndash; 修改为实体类路径 &ndash;&gt;-->
+<!--        <id column="id" property="id" />-->
+<!--        <result column="name" property="name" />-->
+<!--        <result column="age" property="age" />-->
+<!--        <result column="created_time" property="createdTime" />-->
+<!--    </resultMap>-->
+
+<!--    &lt;!&ndash; 插入操作 &ndash;&gt;-->
+<!--    <insert id="insert" parameterType="com.example.domain.YourEntity"> &lt;!&ndash; 修改为实体类路径 &ndash;&gt;-->
+<!--        INSERT INTO your_table (name, age, created_time)-->
+<!--        VALUES (#{name}, #{age}, #{createdTime})-->
+<!--    </insert>-->
+
+<!--    &lt;!&ndash; 删除操作 &ndash;&gt;-->
+<!--    <delete id="deleteById" parameterType="java.lang.Integer">-->
+<!--        DELETE FROM your_table WHERE id = #{id}-->
+<!--    </delete>-->
+
+<!--    &lt;!&ndash; 更新操作 &ndash;&gt;-->
+<!--    <update id="updateById" parameterType="com.example.domain.YourEntity">-->
+<!--        UPDATE your_table-->
+<!--        SET name = #{name},-->
+<!--            age = #{age},-->
+<!--            created_time = #{createdTime}-->
+<!--        WHERE id = #{id}-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash; 查询单条记录 &ndash;&gt;-->
+<!--    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">-->
+<!--        SELECT * FROM your_table WHERE id = #{id}-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 查询所有记录 &ndash;&gt;-->
+<!--    <select id="selectAll" resultMap="BaseResultMap">-->
+<!--        SELECT * FROM your_table-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 根据条件查询 &ndash;&gt;-->
+<!--    <select id="selectByCondition" parameterType="map" resultMap="BaseResultMap">-->
+<!--        SELECT * FROM your_table-->
+<!--        <where>-->
+<!--            <if test="name != null and name != ''">-->
+<!--                AND name = #{name}-->
+<!--            </if>-->
+<!--            <if test="age != null">-->
+<!--                AND age = #{age}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+</mapper>

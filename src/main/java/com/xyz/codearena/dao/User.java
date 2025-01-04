@@ -1,5 +1,6 @@
 package com.xyz.codearena.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.stereotype.Repository;
 
@@ -7,9 +8,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Data
 public class User {
+    @JsonIgnore
+    private long userid;
     private String username;
     private String password;
+    @JsonIgnore
     private boolean enable;
+    @JsonIgnore     // JSON JAVA 相互转换时忽略该属性
     private boolean locked;
 
 

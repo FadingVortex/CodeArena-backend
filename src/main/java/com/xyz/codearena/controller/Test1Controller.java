@@ -3,29 +3,23 @@ package com.xyz.codearena.controller;
 import com.xyz.codearena.dao.User;
 import com.xyz.codearena.service.impl.AppServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.io.PushbackReader;
 import java.util.HashMap;
 import java.util.Map;
 
 //@RestController
-//public class AppController {
+//public class Test1Controller {
 //    @Autowired
 //    private AppServiceImpl appServiceImpl;
-
-    /* 可以将username的value值提取出来赋值为 xx 变量 */
+//
 //    @RequestMapping(value = "/login", method = RequestMethod.POST)
 //    public Map<String, Object> login(@RequestBody User user) {
-//        System.out.println(user);
 //        return appServiceImpl.login(user.getUsername(), user.getPassword());
-//
-//    }
-
-
-//    @RequestMapping(value = "/register", method = RequestMethod.POST)
-//    public Map<String, Object> register() {
-//
-//
-//        return null;
 //    }
 //}
+//
