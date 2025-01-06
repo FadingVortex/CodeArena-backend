@@ -1,12 +1,17 @@
 package com.xyz.codearena.dao;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.stereotype.Repository;
 
-@Data
 @Repository
-public class Page {
+@Data
+public class QuestionParam {
+    @JsonProperty("LMC")
+    private String LMC;
+
     private Integer currentPage;
     private Integer pageSize;
-    private String LMC;
+    private Integer offset;
+
 }

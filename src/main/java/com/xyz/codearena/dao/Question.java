@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL) // 创建Json文件时会自动忽略值为NULL的变量

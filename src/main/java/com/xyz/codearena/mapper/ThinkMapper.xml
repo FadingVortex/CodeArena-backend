@@ -36,6 +36,46 @@
         where `tableName` = #{tableName};
     </select>
 
+    <select id="selectQuestionByPage" parameterType="com.xyz.codearena.dao.QuestionParam" resultType="com.xyz.codearena.dao.Question">
+        select
+            ROW_NUMBER() over () as SNO,  -- 生成序号列
+            Q.LMC as LMC,
+            Q.id as id,
+            Q.title as title,
+            ifnull(SP.submit,0) as submit,
+            ifnull(SP.pass,0) as pass,
+            Q.pdfString as pdfString
+        from
+            questions as Q
+                left join
+            ( select
+                  A.id,A.submit,B.pass
+              from
+                  (select id, count(*) as 'submit'  from jobs where state in('通过','未通过','编译错误') group by id) as A  -- 中间表1
+                      inner join                                                                                                -- 内连接
+                          (select id,count(*) as 'pass' from jobs where state='通过' group by id) as B                              -- 中间表2
+                                                                                                                                on A.id=B.id                                                                                           -- 连接条件
+            ) as SP
+            on Q.id=SP.id
+        where Q.LMC like concat(#{param.LMC},'%') limit #{param.offset}, #{param.pageSize};
 
+    </select>
+    <select id="selectQuestionCount" parameterType="com.xyz.codearena.dao.QuestionParam" resultType="java.lang.Integer">
+        select
+            count(*)
+        from
+            questions as Q
+                left join
+            ( select
+                  A.id,A.submit,B.pass
+              from
+                  (select id, count(*) as 'submit'  from jobs where state in('通过','未通过','编译错误') group by id) as A  -- 中间表1
+                      inner join                                                                                                -- 内连接
+                          (select id,count(*) as 'pass' from jobs where state='通过' group by id) as B                              -- 中间表2
+                                                                                                                                on A.id=B.id                                                                                           -- 连接条件
+            ) as SP
+            on Q.id=SP.id
+        where Q.LMC like concat(#{param.LMC},'%');
+    </select>
 
 </mapper>
