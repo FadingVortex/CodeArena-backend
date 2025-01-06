@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xyz.codearena.mapper.ThinkMapper"> <!-- 修改为对应的 Mapper 类路径 -->
+
+    <select id="selectQuestionByLMC" parameterType="java.lang.String" resultType="com.xyz.codearena.dao.Question">
+        select
+            ROW_NUMBER() over () as SNO,  -- 生成序号列
+            Q.LMC as LMC,
+            Q.id as id,
+            Q.title as title,
+            ifnull(SP.submit,0) as submit,
+            ifnull(SP.pass,0) as pass,
+            Q.pdfString as pdfString
+        from
+            questions as Q
+                left join
+            ( select
+                  A.id,A.submit,B.pass
+              from
+                  (select id, count(*) as 'submit'  from jobs where state in('通过','未通过','编译错误') group by id) as A  -- 中间表1
+                      inner join                                                                                                -- 内连接
+                          (select id,count(*) as 'pass' from jobs where state='通过' group by id) as B                              -- 中间表2
+                                                                                                                                on A.id=B.id                                                                                           -- 连接条件
+            ) as SP
+            on Q.id=SP.id
+            where Q.LMC like concat(#{LMC},'%') ;
+        -- where Q.LMC like "L2%";
+        -- 注意：在MyBatis时，修改为，其中LMC为形参
+
+    </select>
+
+    <select id="selectTableProps" parameterType="java.lang.String" resultType="com.xyz.codearena.dao.TableProps">
+        select `prop`, `label`, `width`
+        from tableProps
+        where `tableName` = #{tableName};
+    </select>
+
+
+
+</mapper>

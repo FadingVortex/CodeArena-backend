@@ -4,8 +4,37 @@
 <mapper namespace="com.xyz.codearena.mapper.TestMapper"> <!-- 修改为对应的 Mapper 类路径 -->
 
     <select id="selectUsernamePassword" parameterType="java.lang.String" resultType="com.xyz.codearena.dao.User">
-       select * from users where `username` = #{username}
+       select * from users where binary `username` = #{username}
+    </select>
+    
 
+<!--    如果使用#就是取值，使用$就是字符串替换不推荐使用-->
+<!--    Java Bean 中 Private 变量也可以使用 -->
+    <select id="selectByUser" parameterType="com.xyz.codearena.dao.User" resultType="com.xyz.codearena.dao.User">
+       select * from users where binary `username` = #{user.username}
+    </select>
+
+
+    <resultMap id="selectOptions" type="com.xyz.codearena.dao.Option">
+        <result column="LeValue" property="value"></result>
+        <result column="Lelabel" property="label"></result>
+        <collection property="children" ofType="com.xyz.codearena.dao.Option">
+            <result column="MoValue" property="value"></result>
+            <result column="MoLabel" property="label"></result>
+            <collection property="children" ofType="com.xyz.codearena.dao.Option">
+                <result column="ChValue" property="value"></result>
+                <result column="CLlabel" property="label"></result>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="selectSelectOption" resultMap="selectOptions">
+        select
+            L.`value` as `LeValue`, L.`label` as `LeLabel`,   -- 等级
+            M.`value` as `MoValue`,M.`label` as `MoLabel`,    -- 模块
+            C.`value` as `ChValue`, C.`label` as `CLlabel`    -- 章节
+        from (LMC as L left join LMC as M on L.`value`=M.`pre`) left join LMC as C on M.`value`=C.`pre`
+        where L.`pre` is null;
     </select>
 
 
