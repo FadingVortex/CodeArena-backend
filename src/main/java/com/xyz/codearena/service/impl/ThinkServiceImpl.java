@@ -1,11 +1,10 @@
 package com.xyz.codearena.service.impl;
 
-import com.xyz.codearena.dao.Question;
-import com.xyz.codearena.dao.QuestionParam;
-import com.xyz.codearena.dao.TableProps;
+import com.xyz.codearena.dao.*;
 import com.xyz.codearena.mapper.ThinkMapper;
 import com.xyz.codearena.service.ThinkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -45,7 +44,6 @@ public class ThinkServiceImpl implements ThinkService {
 
     @Override
     public Map<String, Object> getQuestionPageByLMC(QuestionParam param) {
-        System.out.println("LMC" + param.getLMC());
         Integer total = 0;
         param.setOffset((param.getCurrentPage() - 1) * param.getPageSize());
 
@@ -73,6 +71,35 @@ public class ThinkServiceImpl implements ThinkService {
             res.put("msg", "操作失败");
             e.printStackTrace();
             return res;
+        }
+        return res;
+    }
+
+
+    @Override
+    public Map<String, Object> getJobsByPage(JobPageParam param) {
+        System.out.println("ThinkService: getJobsByPage");
+
+        System.out.println(param);
+
+        List<Job> tableData = thinkMapper.selectJobsByPage(param);
+
+        System.out.println(tableData);
+        int total = thinkMapper.countJobs(param);
+        List<TableProps> tableProps = thinkMapper.selectTableProps("jobs");
+        Map<String, Object> res = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
+        if(tableData == null || tableProps == null) {
+            res.put("code", 201);
+            res.put("msg", "failure");
+        } else {
+            res.put("code", 200);
+            res.put("msg", "success");
+
+            data.put("tableData", tableData);
+            data.put("tableProp", tableProps);
+            data.put("total", total);
+            res.put("data", data);
         }
         return res;
     }

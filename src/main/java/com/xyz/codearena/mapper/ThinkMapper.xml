@@ -51,10 +51,10 @@
             ( select
                   A.id,A.submit,B.pass
               from
-                  (select id, count(*) as 'submit'  from jobs where state in('通过','未通过','编译错误') group by id) as A  -- 中间表1
-                      inner join                                                                                                -- 内连接
-                          (select id,count(*) as 'pass' from jobs where state='通过' group by id) as B                              -- 中间表2
-                                                                                                                                on A.id=B.id                                                                                           -- 连接条件
+              (select id, count(*) as 'submit'  from jobs where state in('通过','未通过','编译错误') group by id) as A  -- 中间表1
+              inner join                                                                                                -- 内连接
+              (select id,count(*) as 'pass' from jobs where state='通过' group by id) as B                              -- 中间表2
+                on A.id=B.id                                                                                           -- 连接条件
             ) as SP
             on Q.id=SP.id
         where Q.LMC like concat(#{param.LMC},'%') limit #{param.offset}, #{param.pageSize};
@@ -69,13 +69,46 @@
             ( select
                   A.id,A.submit,B.pass
               from
-                  (select id, count(*) as 'submit'  from jobs where state in('通过','未通过','编译错误') group by id) as A  -- 中间表1
-                      inner join                                                                                                -- 内连接
-                          (select id,count(*) as 'pass' from jobs where state='通过' group by id) as B                              -- 中间表2
-                                                                                                                                on A.id=B.id                                                                                           -- 连接条件
+              (select id, count(*) as 'submit'  from jobs where state in('通过','未通过','编译错误') group by id) as A  -- 中间表1
+              inner join                                                                                                -- 内连接
+              (select id,count(*) as 'pass' from jobs where state='通过' group by id) as B                              -- 中间表2                                                                                                                  on A.id=B.id                                                                                           -- 连接条件
             ) as SP
             on Q.id=SP.id
         where Q.LMC like concat(#{param.LMC},'%');
+    </select>
+
+    <select id="selectJobsByPage" parameterType="com.xyz.codearena.dao.JobPageParam" resultType="com.xyz.codearena.dao.Job">
+        select
+            J.`runid` as `runid`,
+            J.`id` as `id`,
+            J.`state` as `state`,
+            J.`language` as `language`,
+            J.`size` as `size`,
+            J.`time` as `time`
+        from Jobs as J
+        where 1=1
+            <if test="param.username != null"> and J.`username`=#{param.username}</if>
+            <if test="param.id != null"> and J.`id`=#{param.id}</if>
+            <if test="param.states != null"> and J.state in 
+                <foreach item="it" collection="param.states" open="(" separator="," close=")">
+                    #{it}
+                </foreach>
+            </if>
+        limit #{param.offset}, #{param.pageSize};
+    </select>
+
+    <select id="countJobs" resultType="java.lang.Integer" parameterType="com.xyz.codearena.dao.JobPageParam">
+        select
+            count(*)
+        from Jobs as J
+        where 1=1
+        <if test="param.username != null"> and J.`username`=#{param.username}</if>
+        <if test="param.id != null"> and J.`id`=#{param.id}</if>
+        <if test="param.states != null"> and J.state in
+            <foreach item="it" collection="param.states" open="(" separator="," close=")">
+                #{it}
+            </foreach>
+        </if>;
     </select>
 
 </mapper>
