@@ -6,6 +6,7 @@ import com.xyz.codearena.service.ThinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -103,4 +104,42 @@ public class ThinkServiceImpl implements ThinkService {
         }
         return res;
     }
+
+
+    // 事务注解
+    @Transactional
+    public Map<String, Object> getDeleteQuestionResult(Integer id) {
+        System.out.println("ThinkService: getDeleteQuestionResult");
+        Map<String, Object> res = new HashMap<>();
+
+        try {
+            thinkMapper.deleteJobsById(id);
+            thinkMapper.deleteQuestion(id);
+            res.put("code", 200);
+            res.put("msg", "delete success");
+        } catch (Exception e) {
+            res.put("code", -2);
+            res.put("msg", "failure");
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+
+    public Map<String, Object> getDeleteJobResult(Integer id) {
+        System.out.println("ThinkService: getDeleteJobResult");
+        Map<String, Object> res = new HashMap<>();
+
+        try {
+            thinkMapper.deleteJob(id);
+            res.put("code", 200);
+            res.put("msg", "delete success");
+        } catch (Exception e) {
+            res.put("code", -2);
+            res.put("msg", "failure");
+            e.printStackTrace();
+        }
+        return res;
+    }
+
 }

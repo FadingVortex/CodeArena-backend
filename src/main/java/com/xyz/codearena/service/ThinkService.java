@@ -10,5 +10,7 @@ public interface ThinkService {
     public Map<String, Object> getQuestionByLMC(String LMC);
     public Map<String, Object> getQuestionPageByLMC(QuestionParam param);
     public Map<String, Object> getJobsByPage(JobPageParam param);
+    public Map<String, Object> getDeleteQuestionResult(Integer param);
+    public Map<String, Object> getDeleteJobResult(Integer param);
 
 }

@@ -19,4 +19,8 @@ public interface ThinkMapper {
 
     List<Job> selectJobsByPage(@Param("param") JobPageParam param);
     Integer countJobs(@Param("param") JobPageParam param);
+
+    void deleteQuestion(@Param("id") Integer id);
+    void deleteJobsById(@Param("id") Integer id);
+    void deleteJob(@Param("runid") Integer runid);
 }

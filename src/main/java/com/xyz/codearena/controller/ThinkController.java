@@ -42,4 +42,20 @@ public class ThinkController {
         return thinkServiceImpl.getJobsByPage(param);
     }
 
+    @RequestMapping(value = "/think/delete/questions", method = RequestMethod.POST)
+    public Map<String, Object> deleteQuestion(@RequestBody Integer param){
+        System.out.println("url:/think/delete/questions method:post");
+        System.out.println(param);
+
+        return thinkServiceImpl.getDeleteQuestionResult(param);
+    }
+
+    @RequestMapping(value = "/thinkhome/jobs/delete", method = RequestMethod.POST)
+    public Map<String, Object> deleteJob(@RequestBody Integer param){
+        System.out.println("url:/think/home/jobs method:post");
+        System.out.println(param);
+
+        return thinkServiceImpl.getDeleteJobResult(param);
+    }
+
 }
