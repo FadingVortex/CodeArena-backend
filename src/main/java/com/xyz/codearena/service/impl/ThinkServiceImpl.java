@@ -41,6 +41,23 @@ public class ThinkServiceImpl implements ThinkService {
         return res;
     }
 
+    @Override
+    public Map<String, Object> getQuestionById(Integer id) {
+        List<Question> tableData;
+        Map<String, Object> res = new HashMap<>();
+
+        try {
+            res.put("code", 200);
+            res.put("msg", "success");
+            res.put("data", thinkMapper.selectQuestionById(id));
+            System.out.println(res);
+        } catch (Exception e) {
+            res.put("code", -2);
+            res.put("msg", "error");
+        }
+
+        return res;
+    }
 
 
     @Override
@@ -125,7 +142,7 @@ public class ThinkServiceImpl implements ThinkService {
         return res;
     }
 
-
+    @Override
     public Map<String, Object> getDeleteJobResult(Integer id) {
         System.out.println("ThinkService: getDeleteJobResult");
         Map<String, Object> res = new HashMap<>();

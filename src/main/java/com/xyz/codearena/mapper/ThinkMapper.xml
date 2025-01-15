@@ -30,6 +30,19 @@
 
     </select>
 
+    <select id="selectQuestionById" parameterType="java.lang.Integer" resultType="com.xyz.codearena.dao.Question">
+        select
+            Q.id as id,
+            Q.LMC as LMC,
+            Q.title as title,
+            Q.content as content,
+            Q.pdfString as pdfString
+        from
+            questions as Q
+        where Q.id = #{id};
+    </select>
+
+
     <select id="selectTableProps" parameterType="java.lang.String" resultType="com.xyz.codearena.dao.TableProps">
         select `prop`, `label`, `width`
         from tableProps
@@ -123,4 +136,5 @@
     <delete id="deleteJob" parameterType="java.lang.Integer">
         delete from Jobs where `runid`=#{runid};
     </delete>
+
 </mapper>

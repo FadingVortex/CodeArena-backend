@@ -9,6 +9,7 @@ import java.util.List;
 @Mapper
 public interface ThinkMapper {
     List<Question> selectQuestionByLMC(String LMC);
+    List<Question> selectQuestionById(@Param("id") Integer id);
     List<TableProps> selectTableProps(String tableName);
     Integer selectQuestionCount(@Param("param") QuestionParam param);
 
@@ -23,4 +24,6 @@ public interface ThinkMapper {
     void deleteQuestion(@Param("id") Integer id);
     void deleteJobsById(@Param("id") Integer id);
     void deleteJob(@Param("runid") Integer runid);
+
+
 }

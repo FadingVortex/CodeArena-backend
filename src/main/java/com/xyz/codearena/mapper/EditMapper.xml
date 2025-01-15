@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xyz.codearena.mapper.EditMapper"> <!-- 修改为对应的 Mapper 类路径 -->
+
+    <update id="updateQuestion" parameterType="com.xyz.codearena.dao.Question">
+        update questions
+        set `LMC`=#{param.LMC},`title`=#{param.title}, `content`=#{param.content}, `pdfString`=#{param.pdfString}
+        where `id`=#{param.id};
+    </update>
+
+    <insert id="insertQuestion" parameterType="com.xyz.codearena.dao.Question">
+        insert into
+            questions(`id`, `LMC`, `title`, `content`, `pdfString`)
+        values(#{param.id},#{param.LMC},#{param.title},#{param.content},#{param.pdfString});
+    </insert>
+</mapper>

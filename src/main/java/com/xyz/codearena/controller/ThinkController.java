@@ -2,6 +2,7 @@ package com.xyz.codearena.controller;
 
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import com.xyz.codearena.dao.JobPageParam;
+import com.xyz.codearena.dao.Question;
 import com.xyz.codearena.dao.QuestionParam;
 import com.xyz.codearena.service.impl.ThinkServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,18 @@ public class ThinkController {
     }
 
     @RequestMapping(value = "/think/query/questions", method = RequestMethod.GET)
-    public Map<String, Object> queryByLMC(@RequestParam(required = true, value = "LMC") String LMC) {
-        System.out.println("url:/think/query/questions method:get");
-        System.out.println(LMC);
-        return thinkServiceImpl.getQuestionByLMC(LMC);
+    public Map<String, Object> queryByLMC(@RequestParam(required = false, value = "LMC") String LMC,
+                                          @RequestParam(required = false, value = "id") Integer id) {
+        if(id != null) {
+            System.out.println("url:/think/query/questions?id=${value} method:get");
+            return thinkServiceImpl.getQuestionById(id);
+        } else if(LMC != null) {
+            System.out.println("url:/think/query/questions?LMC=${value} method:get");
+            System.out.println(LMC);
+            return thinkServiceImpl.getQuestionByLMC(LMC);
+        } else {
+            return null;
+        }
     }
 
     @RequestMapping(value = "/think/jobs/query", method = RequestMethod.POST)
